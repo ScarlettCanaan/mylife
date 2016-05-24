@@ -1,0 +1,19 @@
+A is a random constructed polynomial, above this polynomial will evaluate value for given random x:
+A: 4x^2+7x^1
+x : 86   f(x) = :30186
+x : 92   f(x) = :34500
+x : 49   f(x) = :9947
+x : 21   f(x) = :1911
+x : 62   f(x) = :15810
+A: 5x^4+5x^1
+x : 26   f(x) = :2285010
+x : 72   f(x) = :134369640
+x : 36   f(x) = :8398260
+x : 11   f(x) = :73260
+x : 68   f(x) = :106907220
+A: 3x^5+3x^4+3x^1
+x : 67   f(x) = :-2087030084
+x : 35   f(x) = :162067605
+x : 29   f(x) = :63655377
+x : 2   f(x) = :150
+x : 22   f(x) = :16163730
