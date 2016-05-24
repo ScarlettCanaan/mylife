@@ -44,7 +44,9 @@ LinkPtr bubble_sort(LinkPtr front)
 
 		}
 	}
-	return pHead->next;
+	front = pHead->next;
+	free(pHead);
+	return front;
 }
 
 LinkPtr addNode(LinkPtr front, int _value)
@@ -94,7 +96,7 @@ int main(int argc, char const *argv[])
 		if (front->next->value < front->value)
 		{
 			printf("FUCK sort failed!");
-			return;
+			return 1;
 		}
 		front = front->next;
 	}
