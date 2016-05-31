@@ -105,6 +105,7 @@ void printContact(ContPtr contPtr)
 			contPtr=contPtr->Next;
 		}
 	}
+	printf("\n");
 }
 
 int main(int argc, const char *argv[])
@@ -114,11 +115,20 @@ int main(int argc, const char *argv[])
 	ptr = addNode(ptr, "Linux", "234567");
 	ptr = addNode(ptr, "Turing", "345678");
 	ptr = addNode(ptr, "Shannon", "456789");
-	ptr = addNode(ptr, "Neumann", "567890");
-	ptr = deleteNodeOnName(ptr, "Shannon");
+	printf("Print Contacts:\n");
 	printContact(ptr);
+	printf("Add Neumann 567890....\n");
+	ptr = addNode(ptr, "Neumann", "567890");
+	printf("Print Contacts:\n");
+	printContact(ptr);
+	printf("Delete Shannon....\n");
+	ptr = deleteNodeOnName(ptr, "Shannon");
+	printf("Print Contacts:\n");
+	printContact(ptr);
+	printf("Search Turing:\n");
 	ptr = searchOnName(ptr, "Turing");
 	printf("Name:%s Phone:%s\n", ptr->Name, ptr->phoneNumber);
+	printf("Print Contacts:\n");
 	printContact(ptr);
 	return 0;
 }
