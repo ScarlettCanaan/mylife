@@ -749,7 +749,7 @@ YY_RULE_SETUP
 #line 15 "contactParser.l"
 {
 				ECHO;
-				strcat(strPtr, yytext);
+				strcat(strPtr, yytext+3);
 			}
 	YY_BREAK
 case 2:

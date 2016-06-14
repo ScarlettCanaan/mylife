@@ -14,7 +14,7 @@ name 		FN:.+\n
 %%
 {name}		{
 				ECHO;
-				strcat(strPtr, yytext);
+				strcat(strPtr, yytext+3);
 			}
 .|\n			{ }
 %%
