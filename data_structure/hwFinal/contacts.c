@@ -172,7 +172,7 @@ vertexPtr getVertexBasedOnName(vertexPtr src, char* _name)
 			return temp;
 		}
 	}
-	return temp->nextvertex;
+	return NULL;
 }
 
 bool BFS(vertexPtr src, vertexPtr target)
@@ -212,10 +212,10 @@ bool DFS(vertexPtr src, vertexPtr target)
 	static count = 0;
 	vertexPtr ptr = clearVisitedMark(src);
 	ptr->marked = TRUE;
-	enq(src);
-	++count;
 	if (ptr->arc_ptr != NULL)
 	{
+		enq(src);
+		++count;
 		edgePtr watch;
 		for (watch = ptr->arc_ptr; watch != NULL; watch = watch->nextarc)
 		{
@@ -230,6 +230,7 @@ bool DFS(vertexPtr src, vertexPtr target)
 			}
 			if (!isVisitedMark(watchVertex))
 			{
+
 				if (DFS(watchVertex, target))
 				{
 					printf("->%s", frontelement()->info->name);
@@ -246,6 +247,7 @@ bool DFS(vertexPtr src, vertexPtr target)
 	}
 	else if (!strcmp(src->info->name, target->info->name))
 	{
+		printf("%s : ", src->info->name);
 		printf("%s", frontelement()->info->name);
 		deq();
 		--count;
@@ -253,13 +255,8 @@ bool DFS(vertexPtr src, vertexPtr target)
 	}
 	else
 	{
-		deq();
-		--count;
 		return FALSE;
 	}
-	deq();
-	--count;
-	return FALSE;
 }
 
 vertexPtr clearVisitedMark(vertexPtr src)
