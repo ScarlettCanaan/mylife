@@ -16,7 +16,7 @@ name 		FN:.+\n
 				ECHO;
 				strcat(strPtr, yytext+3);
 			}
-.|\n			{ }
+.|\n		{ }
 %%
 int main() {
 	yylex();

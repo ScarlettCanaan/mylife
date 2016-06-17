@@ -1,5 +1,6 @@
+#line 2 "lexForFB.yy.c"
 
-#line 3 "lex.yy.c"
+#line 4 "lexForFB.yy.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -378,9 +379,10 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static yyconst flex_int16_t yy_accept[11] =
+static yyconst flex_int16_t yy_accept[19] =
     {   0,
-        0,    0,    4,    2,    2,    0,    0,    0,    1,    0
+        0,    0,    4,    2,    2,    0,    0,    0,    0,    0,
+        0,    0,    0,    0,    0,    0,    1,    0
     } ;
 
 static yyconst flex_int32_t yy_ec[256] =
@@ -388,15 +390,15 @@ static yyconst flex_int32_t yy_ec[256] =
         1,    1,    1,    1,    1,    1,    1,    1,    1,    2,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    3,    1,    4,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    5,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    1,    6,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    3,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    4,
-        1,    1,    1,    1,    1,    1,    1,    5,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        1,    1,    1,    1,    1,    1,    7,    1,    1,    1,
 
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
+        8,    1,    1,    1,    1,    1,    1,    1,    9,   10,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -415,33 +417,37 @@ static yyconst flex_int32_t yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static yyconst flex_int32_t yy_meta[6] =
+static yyconst flex_int32_t yy_meta[11] =
     {   0,
-        1,    2,    3,    1,    4
+        1,    2,    1,    1,    1,    1,    1,    1,    1,    1
     } ;
 
-static yyconst flex_int16_t yy_base[15] =
+static yyconst flex_int16_t yy_base[21] =
     {   0,
-        9,    8,   11,   14,    0,    0,    0,    8,   14,   14,
-        0,    5,    3,    4
+       17,   16,   19,   22,    8,   10,    7,    7,   10,    7,
+        9,    7,    0,    3,    0,    4,   22,   22,    8,    0
     } ;
 
-static yyconst flex_int16_t yy_def[15] =
+static yyconst flex_int16_t yy_def[21] =
     {   0,
-       11,   11,   10,   10,   12,   13,   14,   14,   10,    0,
-       10,   10,   10,   10
+       19,   19,   18,   18,   18,   18,   18,   18,   18,   18,
+       18,   18,   20,   20,   20,   20,   18,    0,   18,   18
     } ;
 
-static yyconst flex_int16_t yy_nxt[20] =
+static yyconst flex_int16_t yy_nxt[33] =
     {   0,
-        4,    4,    4,    4,    8,    7,    8,    8,    6,    9,
-       10,    5,    5,    3,   10,   10,   10,   10,   10
+       14,   18,   18,   15,   16,   17,   15,   15,    4,    4,
+       13,   12,   11,   10,    9,    8,    7,    6,   18,    5,
+        5,    3,   18,   18,   18,   18,   18,   18,   18,   18,
+       18,   18
     } ;
 
-static yyconst flex_int16_t yy_chk[20] =
+static yyconst flex_int16_t yy_chk[33] =
     {   0,
-       11,   11,   11,   11,   14,   13,   14,   14,   12,    8,
-        3,    2,    1,   10,   10,   10,   10,   10,   10
+       20,    0,    0,   15,   15,   16,   14,   16,   19,   19,
+       12,   11,   10,    9,    8,    7,    6,    5,    3,    2,
+        1,   18,   18,   18,   18,   18,   18,   18,   18,   18,
+       18,   18
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -458,8 +464,8 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "contactParser.l"
-#line 2 "contactParser.l"
+#line 1 "fbFriendsParser.l"
+#line 2 "fbFriendsParser.l"
 	#include <unistd.h>  
 	#include <fcntl.h>  
 	#include <stdio.h>  
@@ -470,7 +476,7 @@ char *yytext;
 	#include <malloc.h>
 	int  file_fd; 
 	char strPtr[100000];
-#line 474 "lex.yy.c"
+#line 480 "lexForFB.yy.c"
 
 #define INITIAL 0
 
@@ -684,9 +690,9 @@ YY_DECL
 		}
 
 	{
-#line 14 "contactParser.l"
+#line 14 "fbFriendsParser.l"
 
-#line 690 "lex.yy.c"
+#line 696 "lexForFB.yy.c"
 
 	while ( 1 )		/* loops until end-of-file is reached */
 		{
@@ -713,13 +719,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 11 )
+				if ( yy_current_state >= 19 )
 					yy_c = yy_meta[(unsigned int) yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 14 );
+		while ( yy_base[yy_current_state] != 22 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -746,24 +752,24 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 15 "contactParser.l"
+#line 15 "fbFriendsParser.l"
 {
 				ECHO;
-				strcat(strPtr, yytext+3);
+				strcat(strPtr, yytext+8);
 			}
 	YY_BREAK
 case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
-#line 19 "contactParser.l"
+#line 19 "fbFriendsParser.l"
 { }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 20 "contactParser.l"
+#line 20 "fbFriendsParser.l"
 ECHO;
 	YY_BREAK
-#line 767 "lex.yy.c"
+#line 773 "lexForFB.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1056,7 +1062,7 @@ static int yy_get_next_buffer (void)
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 11 )
+			if ( yy_current_state >= 19 )
 				yy_c = yy_meta[(unsigned int) yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
@@ -1084,11 +1090,11 @@ static int yy_get_next_buffer (void)
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 11 )
+		if ( yy_current_state >= 19 )
 			yy_c = yy_meta[(unsigned int) yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
-	yy_is_jam = (yy_current_state == 10);
+	yy_is_jam = (yy_current_state == 18);
 
 		return yy_is_jam ? 0 : yy_current_state;
 }
@@ -1758,13 +1764,13 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 19 "contactParser.l"
+#line 19 "fbFriendsParser.l"
 
 
 int main() {
 	yylex();
-    if ((file_fd = open("IntermidiateOutputFile", O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR)) == -1) {  
-        fprintf(stderr, "Open %s Error：%s\n", "IntermidiateOutputFile", strerror(errno));  
+    if ((file_fd = open("IntermidiateOutputFile2", O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR)) == -1) {  
+        fprintf(stderr, "Open %s Error：%s\n", "IntermidiateOutputFile2", strerror(errno));  
         exit(1);  
     } 
     else   
@@ -1773,7 +1779,7 @@ int main() {
     }  
     if ((write(file_fd, strPtr, strlen(strPtr)) == -1))
     {
-    	fprintf(stderr, "Write %s Error：%s\n", "IntermidiateOutputFile", strerror(errno));  
+    	fprintf(stderr, "Write %s Error：%s\n", "IntermidiateOutputFile2", strerror(errno));  
     }
     close(file_fd);  
 	return (0);
