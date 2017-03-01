@@ -5,17 +5,17 @@
 
 enum Direct
 {
-    UP = 0,
-    DOWN = 1,
-    LEFT = 2,
-    RIGHT = 3,
+	UP = 0,
+	DOWN = 1,
+	LEFT = 2,
+	RIGHT = 3,
 };
 
 class point {
 public:
-    int x, y;
-    point(int _x, int _y) : x(_x), y(_y) {};
-    point() : x(0), y(0) {};
+	int x, y;
+	point(int _x, int _y) : x(_x), y(_y) {};
+	point() : x(0), y(0) {};
 };
 
 //正方形的结构信息
@@ -31,8 +31,8 @@ public:
 class Solution2 {
 public:
 	std::vector<blockInfo> insert(std::vector<std::vector<int>>& src_map, 
-                                  size_t						 targX, 
-                                  size_t						 targY, 
+								  size_t						 targX, 
+								  size_t						 targY, 
 								  const std::vector<blockInfo>&	 old_info) {
 
 		// 边界条件
@@ -129,6 +129,14 @@ public:
 		if (!canThrow)
 			return old_info;
 		src_map[throwpoint.y][throwpoint.x] = 0;
+		std::vector<blockInfo> new_info;
+		// 有core并且core没有成长到4*4的情况，优先构造core四周的结构
+		for (size_t i = 0; i < old_info.size(); i++) {
+			if (old_info[i].id == -1 && old_info[i].size < 4) {
+				new_info.push_back(calcCoreStructure(src_map, old_info[i]));
+				break;
+			}
+		}
 		// 定义动态规划的状态
 		std::vector<std::vector<int>> state(src_map.size(), std::vector<int>(src_map[0].size()));
 		// 初始化最小状态
@@ -150,7 +158,6 @@ public:
 
 private:
 	blockInfo calcCoreStructure(std::vector<std::vector<int>>& src_map, blockInfo coreInfo) {
-
 		// 在以core为中心的7x7的矩阵内搜索包含core方块的最大矩形
 		// 定义动态规划的状态
 		std::vector<std::vector<int>> state(std::min(7, (int)src_map.size()), std::vector<int>(std::min(7, (int)src_map[0].size())));
@@ -189,8 +196,8 @@ private:
 		if (max_size == 0)
 			return coreInfo;
 		else {
-			for (size_t i = rigion_leftup.y; i <= rigion_rightdown.y; i++)
-				for (size_t j = rigion_leftup.x; j <= rigion_rightdown.x; j++)
+			for (int i = rigion_leftup.y; i <= rigion_rightdown.y; i++)
+				for (int j = rigion_leftup.x; j <= rigion_rightdown.x; j++)
 					src_map[i][j] = -1;
 			coreInfo.leftup = rigion_leftup;
 			coreInfo.rightdown = rigion_rightdown;
@@ -263,8 +270,8 @@ private:
 				break;
 			}
 		}
-		size_t height = src_map.size();
-		size_t width = src_map[0].size();
+		int height = src_map.size();
+		int width = src_map[0].size();
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
 				if (src_map[i][j] > 0) {
@@ -290,8 +297,8 @@ private:
 				break;
 			}
 		}
-		size_t height = src_map.size();
-		size_t width = src_map[0].size();
+		int height = src_map.size();
+		int width = src_map[0].size();
 		for (int i = 0; i < height; i++) {
 			for (int j = width - 1; j >= 0; j--) {
 				if (src_map[i][j] > 0) {
@@ -317,8 +324,8 @@ private:
 				break;
 			}
 		}
-		size_t height = src_map.size();
-		size_t width = src_map[0].size();
+		int height = src_map.size();
+		int width = src_map[0].size();
 		for (int i = height - 1; i >= 0; i--) {
 			for (int j = 0; j < width; j++) {
 				if (src_map[i][j] > 0) {
@@ -344,8 +351,8 @@ private:
 				break;
 			}
 		}
-		size_t height = src_map.size();
-		size_t width = src_map[0].size();
+		int height = src_map.size();
+		int width = src_map[0].size();
 		for (int i = height - 1; i >= 0; i--) {
 			for (int j = width - 1; j >= 0; j--) {
 				if (src_map[i][j] > 0) {
@@ -371,8 +378,8 @@ private:
 				break;
 			}
 		}
-		size_t height = src_map.size();
-		size_t width = src_map[0].size();
+		int height = src_map.size();
+		int width = src_map[0].size();
 		for (int j = 0; j < width - 1; j++) {
 			for (int i = height - 1; i >= 0; i--) {
 				if (src_map[i][j] > 0) {
@@ -398,8 +405,8 @@ private:
 				break;
 			}
 		}
-		size_t height = src_map.size();
-		size_t width = src_map[0].size();
+		int height = src_map.size();
+		int width = src_map[0].size();
 		for (int j = 0; j < width - 1; j++) {
 			for (int i = 0; i < height - 1; i++) {
 				if (src_map[i][j] > 0) {
@@ -425,8 +432,8 @@ private:
 				break;
 			}
 		}
-		size_t height = src_map.size();
-		size_t width = src_map[0].size();
+		int height = src_map.size();
+		int width = src_map[0].size();
 		for (int j = width - 1; j >= 0; j--) {
 			for (int i = height - 1; i >= 0; i--) {
 				if (src_map[i][j] > 0) {
@@ -452,8 +459,8 @@ private:
 				break;
 			}
 		}
-		size_t height = src_map.size();
-		size_t width = src_map[0].size();
+		int height = src_map.size();
+		int width = src_map[0].size();
 		for (int j = width - 1; j >= 0; j--) {
 			for (int i = 0; i < height - 1; i++) {
 				if (src_map[i][j] == -1) {
@@ -502,15 +509,15 @@ std::vector<blockInfo> getBlockorInfo(std::vector<std::vector<int>> src_map) {
 				blockInfo info;
 				info.id = -1;
 				info.leftup = point(x, y);
-				int size = 1;
-				for (int i = y; i <= info.rightdown.y; ++i) {
-					for (int j = x; j <= info.rightdown.x; ++j) {
+				int size = 0;
+				for (int i = y; i < src_map.size() && src_map[i][x] == -1; ++i) {
+					for (int j = x; j < src_map[0].size() && src_map[i][j] == -1; ++j) {
 						src_map[i][j] = 0;
 						++size;
 					}
-					size = 1;
+					info.size = size;
+					size = 0;
 				}
-				info.size = size;
 				info.rightdown = point(x + info.size - 1, y + info.size - 1);
 				info.central = point(info.leftup.x + info.size / 2, info.leftup.y + info.size / 2);
 				retVal.push_back(info);
