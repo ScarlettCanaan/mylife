@@ -189,7 +189,7 @@ input:
 0 1 1 1 0 
 1 1 0 0 0 
 id:1 size:2 leftup:(0, 0) rightdown:(1, 1)
-input:
+output:
 1 1 0 1 1 
 1 3 3 3 0 
 0 3 3 3 0 
@@ -205,7 +205,7 @@ input:
 1 1 0 0 0 
 id:1 size:2 leftup:(0, 0) rightdown:(1, 1)
 id:2 size:2 leftup:(1, 2) rightdown:(2, 3)
-input:
+output:
 1 1 0 1 1 
 1 3 3 3 0 
 0 3 3 3 0 
@@ -219,7 +219,7 @@ input:
 0 1 0 0 
 0 1 1 0 
 id:1 size:2 leftup:(0, 0) rightdown:(1, 1)
-input:
+output:
 2 2 1 0 
 2 2 1 1 
 0 2 2 0 
@@ -233,7 +233,7 @@ input:
 0 1 0 0 
 0 0 0 0 
 id:1 size:2 leftup:(0, 0) rightdown:(1, 1)
-input:
+output:
 2 2 1 0 
 2 2 1 1 
 0 1 1 0 
@@ -246,7 +246,7 @@ input:
 0 2 2 0 
 0 0 0 0 
 id:1 size:2 leftup:(1, 1) rightdown:(2, 2)
-input:
+output:
 1 1 1 0 
 1 2 2 0 
 0 2 2 0 
@@ -262,7 +262,7 @@ input:
 1 1 1 0 0 
 id:1 size:2 leftup:(0, 0) rightdown:(1, 1)
 id:2 size:3 leftup:(0, 2) rightdown:(2, 4)
-input:
+output:
 2 2 0 1 1 
 2 2 0 1 0 
 4 4 4 4 0 
@@ -284,7 +284,7 @@ id:1 size:3 leftup:(0, 0) rightdown:(2, 2)
 id:2 size:3 leftup:(3, 0) rightdown:(5, 2)
 id:3 size:3 leftup:(3, 3) rightdown:(5, 5)
 id:4 size:2 leftup:(0, 5) rightdown:(1, 6)
-input:
+output:
 2 2 4 4 4 4 0 
 2 2 4 4 4 4 0 
 1 1 4 4 4 4 0 
@@ -305,7 +305,7 @@ input:
 id:1 size:2 leftup:(0, 0) rightdown:(1, 1)
 id:2 size:2 leftup:(3, 0) rightdown:(4, 1)
 id:-1 size:1 leftup:(2, 1) rightdown:(2, 1)
-input:
+output:
 1 -1 -1 -1 1 
 1 -1 -1 -1 1 
 0 -1 -1 -1 0 
@@ -315,7 +315,7 @@ input:
 0 0 
 0 -1 
 id:-1 size:1 leftup:(1, 1) rightdown:(1, 1)
-input:
+output:
 0 0 
 1 -1 
 id:-1 size:1 leftup:(1, 1) rightdown:(1, 1)
@@ -329,7 +329,7 @@ input:
 1 1 0 0 0 
 id:1 size:3 leftup:(1, 1) rightdown:(3, 3)
 output:
-1 1 0 1 1 
+1 1 0 1 0 
 1 3 3 3 0 
 0 3 3 3 0 
 0 3 3 3 0 
@@ -344,12 +344,13 @@ input:
 0 0 0 0 0 
 id:1 size:3 leftup:(1, 1) rightdown:(3, 3)
 output:
-1 1 0 0 0 
-1 3 3 3 0 
-0 3 3 3 0 
-0 3 3 3 0 
+2 2 0 0 0 
+2 2 2 2 0 
+0 1 2 2 0 
+0 1 1 0 0 
 0 0 0 0 0 
-id:1 size:3 leftup:(1, 1) rightdown:(3, 3)
+id:1 size:2 leftup:(0, 0) rightdown:(1, 1)
+id:2 size:2 leftup:(2, 1) rightdown:(3, 2)
 
 input:
 2 2 1 0 
@@ -361,10 +362,9 @@ id:2 size:2 leftup:(1, 2) rightdown:(2, 3)
 output:
 2 2 1 0 
 2 2 1 1 
-0 2 2 0 
-0 2 2 0 
+0 1 1 0 
+0 0 1 0 
 id:1 size:2 leftup:(0, 0) rightdown:(1, 1)
-id:2 size:2 leftup:(1, 2) rightdown:(2, 3)
 
 input:
 2 2 1 0 
@@ -373,11 +373,11 @@ input:
 0 0 0 0 
 id:1 size:2 leftup:(0, 0) rightdown:(1, 1)
 output:
-2 2 1 0 
-2 2 1 1 
+0 2 2 0 
+1 2 2 1 
 0 1 0 0 
 0 0 0 0 
-id:1 size:2 leftup:(0, 0) rightdown:(1, 1)
+id:1 size:2 leftup:(1, 0) rightdown:(2, 1)
 
 input:
 0 1 1 0 
@@ -387,7 +387,7 @@ input:
 id:1 size:2 leftup:(1, 1) rightdown:(2, 2)
 output:
 0 1 1 0 
-1 2 2 0 
+0 2 2 0 
 0 2 2 0 
 0 0 0 0 
 id:1 size:2 leftup:(1, 1) rightdown:(2, 2)
@@ -402,14 +402,38 @@ input:
 id:1 size:2 leftup:(0, 0) rightdown:(1, 1)
 id:2 size:3 leftup:(0, 2) rightdown:(2, 4)
 output:
-2 2 0 1 1 
-2 2 0 1 0 
+0 1 0 1 1 
+1 1 0 1 0 
 3 3 3 1 0 
 3 3 3 1 0 
 3 3 3 1 0 
 1 1 1 0 0 
-id:1 size:2 leftup:(0, 0) rightdown:(1, 1)
-id:2 size:3 leftup:(0, 2) rightdown:(2, 4)
+id:1 size:3 leftup:(0, 2) rightdown:(2, 4)
+
+input:
+3 3 3 3 3 3 0 
+3 3 3 3 3 3 0 
+3 3 3 3 3 3 0 
+0 0 0 3 3 3 0 
+0 0 1 3 3 3 0 
+2 2 1 3 3 3 0 
+2 2 1 0 0 0 0 
+id:1 size:3 leftup:(0, 0) rightdown:(2, 2)
+id:2 size:3 leftup:(3, 0) rightdown:(5, 2)
+id:3 size:3 leftup:(3, 3) rightdown:(5, 5)
+id:4 size:2 leftup:(0, 5) rightdown:(1, 6)
+output:
+3 3 3 2 2 0 0 
+3 3 3 2 2 1 0 
+3 3 3 1 1 1 0 
+0 0 0 3 3 3 0 
+0 0 1 3 3 3 0 
+2 2 1 3 3 3 0 
+2 2 1 0 0 0 0 
+id:1 size:3 leftup:(3, 3) rightdown:(5, 5)
+id:2 size:3 leftup:(0, 0) rightdown:(2, 2)
+id:3 size:2 leftup:(0, 5) rightdown:(1, 6)
+id:4 size:2 leftup:(3, 0) rightdown:(4, 1)
 
 input:
 3 3 3 3 3 3 0 
@@ -427,39 +451,14 @@ output:
 3 3 3 3 3 3 0 
 3 3 3 3 3 3 0 
 3 3 3 3 3 3 0 
-0 0 0 3 3 3 0 
-0 0 1 3 3 3 0 
-2 2 1 3 3 3 0 
+0 0 0 2 2 1 0 
+0 0 1 2 2 1 0 
+2 2 1 1 1 0 0 
 2 2 1 0 0 0 0 
-id:1 size:3 leftup:(0, 0) rightdown:(2, 2)
-id:2 size:3 leftup:(3, 0) rightdown:(5, 2)
-id:3 size:3 leftup:(3, 3) rightdown:(5, 5)
-id:4 size:2 leftup:(0, 5) rightdown:(1, 6)
-
-input:
-3 3 3 3 3 3 0 
-3 3 3 3 3 3 0 
-3 3 3 3 3 3 0 
-0 0 0 3 3 3 0 
-0 0 1 3 3 3 0 
-2 2 1 3 3 3 0 
-2 2 1 0 0 0 0 
-id:1 size:3 leftup:(0, 0) rightdown:(2, 2)
-id:2 size:3 leftup:(3, 0) rightdown:(5, 2)
-id:3 size:3 leftup:(3, 3) rightdown:(5, 5)
-id:4 size:2 leftup:(0, 5) rightdown:(1, 6)
-output:
-3 3 3 3 3 3 0 
-3 3 3 3 3 3 0 
-3 3 3 3 3 3 0 
-0 0 0 3 3 3 0 
-0 0 1 3 3 3 0 
-2 2 1 3 3 3 0 
-2 2 1 0 0 0 0 
-id:1 size:3 leftup:(0, 0) rightdown:(2, 2)
-id:2 size:3 leftup:(3, 0) rightdown:(5, 2)
-id:3 size:3 leftup:(3, 3) rightdown:(5, 5)
-id:4 size:2 leftup:(0, 5) rightdown:(1, 6)
+id:1 size:3 leftup:(3, 0) rightdown:(5, 2)
+id:2 size:3 leftup:(0, 0) rightdown:(2, 2)
+id:3 size:2 leftup:(0, 5) rightdown:(1, 6)
+id:4 size:2 leftup:(3, 3) rightdown:(4, 4)
 
 input:
 1 0 0 
@@ -468,9 +467,7 @@ input:
 id:-1 size:2 leftup:(0, 1) rightdown:(1, 2)
 output:
 1 0 0 
--1 -1 0 
--1 -1 0 
-id:-1 size:2 leftup:(0, 1) rightdown:(1, 2)
-
+1 1 0 
+0 -1 0 
 
 ```
