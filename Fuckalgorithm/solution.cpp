@@ -2,6 +2,7 @@
 #include <vector>
 #include <algorithm>
 #include <list>
+#include <fstream>
 
 enum Direct
 {
@@ -30,10 +31,10 @@ public:
 
 class Solution2 {
 public:
-	std::vector<blockInfo> insert(std::vector<std::vector<int>>& src_map, 
-								  size_t						 targX, 
-								  size_t						 targY, 
-								  const std::vector<blockInfo>&	 old_info) {
+	std::vector<blockInfo> insert(std::vector<std::vector<int>>& src_map,
+		size_t						 targX,
+		size_t						 targY,
+		const std::vector<blockInfo>&	 old_info) {
 
 		// 边界条件
 		if (targX < 0 || targX >= src_map[0].size() ||
@@ -158,7 +159,7 @@ public:
 
 private:
 	blockInfo calcCoreStructure(std::vector<std::vector<int>>& src_map, blockInfo coreInfo) {
-		// 在以core为中心的7x7的矩阵内搜索包含core方块的最大矩形
+		// 在以core为中心的最大7x7的矩阵内搜索包含core方块的最大矩形
 		// 定义动态规划的状态
 		std::vector<std::vector<int>> state(std::min(7, (int)src_map.size()), std::vector<int>(std::min(7, (int)src_map[0].size())));
 		// 初始化最小状态
@@ -167,8 +168,11 @@ private:
 		for (size_t i = 0; i < state.size(); ++i) {
 			for (size_t j = 0; j < state[0].size(); ++j) {
 				// core已形成的原结构标记为 -1
-				if (src_map[offsetY + i][offsetX + j] > 0 || src_map[offsetY + i][offsetX + j] == -1)
+				if (src_map[offsetY + i][offsetX + j] > 0 || src_map[offsetY + i][offsetX + j] == -1) {
 					state[i][j] = 1;
+					src_map[offsetY + i][offsetX + j] = 1;
+				}
+
 				else
 					state[i][j] = 0;
 			}
@@ -181,7 +185,7 @@ private:
 			for (size_t j = 1; j < state[0].size(); ++j) {
 				if (state[i][j] > 0) {
 					state[i][j] = std::min(std::min(state[i - 1][j - 1], state[i][j - 1]), state[i - 1][j]) + 1;
-					if (state[i][j] > coreInfo.size && state[i][j] <= 4 && state[i][j] > max_size) {
+					if (state[i][j] >= coreInfo.size && state[i][j] <= 4 && state[i][j] > max_size) {
 						rigion_leftup.x = offsetX + j - state[i][j] + 1;
 						rigion_leftup.y = offsetY + i - state[i][j] + 1;
 						rigion_rightdown.x = offsetX + j;
@@ -193,6 +197,8 @@ private:
 				}
 			}
 		}
+		// core点必定为-1
+		src_map[coreInfo.central.y][coreInfo.central.x] = -1;
 		if (max_size == 0)
 			return coreInfo;
 		else {
@@ -205,10 +211,10 @@ private:
 			return coreInfo;
 		}
 	}
-	std::vector<blockInfo> dfsHelper(std::vector<std::vector<int>>&		src_map, 
-									 std::vector<std::vector<int>>&		state, 
-									 const std::vector<blockInfo>&		old_info, 
-									 std::vector<blockInfo>&			new_info) {
+	std::vector<blockInfo> dfsHelper(std::vector<std::vector<int>>&		src_map,
+		std::vector<std::vector<int>>&		state,
+		const std::vector<blockInfo>&		old_info,
+		std::vector<blockInfo>&			new_info) {
 		// 状态转移方程
 		int max_size = 0;
 		std::vector<point> Q;
@@ -224,7 +230,7 @@ private:
 					// 找到多个相同大小的结果，优先构造原有的正方形，再按右上->左下的方式生成
 					else if (state[i][j] == max_size && state[i][j] > 1) {
 						for (size_t iter = 0; iter < old_info.size(); iter++) {
-							if (old_info[iter].rightdown.x == j && 
+							if (old_info[iter].rightdown.x == j &&
 								old_info[iter].rightdown.y == i &&
 								old_info[iter].size == max_size) {
 								Q.clear();
@@ -255,18 +261,19 @@ private:
 		info.size = max_size;
 		info.leftup = point(Q[0].x - max_size + 1, Q[0].y - max_size + 1);
 		info.rightdown = point(Q[0].x, Q[0].y);
-		info.central = point(info.rightdown.x - (max_size / 2), info.rightdown.y - (max_size /2));
+		info.central = point(info.rightdown.x - (max_size / 2), info.rightdown.y - (max_size / 2));
 		new_info.push_back(info);
-		
+
 		return dfsHelper(src_map, state, old_info, new_info);
 	};
 
 	// 八个扫描方向
 	bool scanUPLEFT(const std::vector<std::vector<int>>& src_map, point& p, const std::vector<blockInfo>& old_info) {
-		int coreSize = 0;
+		blockInfo coreInfo;
+		coreInfo.size = 0;
 		for (size_t i = 0; i < old_info.size(); i++) {
 			if (old_info[i].id == -1) {
-				coreSize = old_info[i].size;
+				coreInfo = old_info[i];
 				break;
 			}
 		}
@@ -279,7 +286,10 @@ private:
 					p.y = i;
 					return true;
 				}
-				if (src_map[i][j] == -1 && coreSize < 4 && coreSize > 1) {
+				if (src_map[i][j] == -1 &&
+					coreInfo.size < 4 &&
+					coreInfo.size > 1 &&
+					(coreInfo.central.x != j || coreInfo.central.y != i)) {
 					p.x = j;
 					p.y = i;
 					return true;
@@ -290,10 +300,11 @@ private:
 	};
 
 	bool scanUPRIGHT(const std::vector<std::vector<int>>& src_map, point& p, const std::vector<blockInfo>& old_info) {
-		int coreSize = 0;
+		blockInfo coreInfo;
+		coreInfo.size = 0;
 		for (size_t i = 0; i < old_info.size(); i++) {
 			if (old_info[i].id == -1) {
-				coreSize = old_info[i].size;
+				coreInfo = old_info[i];
 				break;
 			}
 		}
@@ -306,7 +317,10 @@ private:
 					p.y = i;
 					return true;
 				}
-				if (src_map[i][j] == -1 && coreSize < 4 && coreSize > 1) {
+				if (src_map[i][j] == -1 &&
+					coreInfo.size < 4 &&
+					coreInfo.size > 1 &&
+					(coreInfo.central.x != j || coreInfo.central.y != i)) {
 					p.x = j;
 					p.y = i;
 					return true;
@@ -317,10 +331,11 @@ private:
 	}
 
 	bool scanDOWNLEFT(const std::vector<std::vector<int>>& src_map, point& p, const std::vector<blockInfo>& old_info) {
-		int coreSize = 0;
+		blockInfo coreInfo;
+		coreInfo.size = 0;
 		for (size_t i = 0; i < old_info.size(); i++) {
 			if (old_info[i].id == -1) {
-				coreSize = old_info[i].size;
+				coreInfo = old_info[i];
 				break;
 			}
 		}
@@ -333,7 +348,10 @@ private:
 					p.y = i;
 					return true;
 				}
-				if (src_map[i][j] == -1 && coreSize < 4 && coreSize > 1) {
+				if (src_map[i][j] == -1 &&
+					coreInfo.size < 4 &&
+					coreInfo.size > 1 &&
+					(coreInfo.central.x != j || coreInfo.central.y != i)) {
 					p.x = j;
 					p.y = i;
 					return true;
@@ -344,10 +362,11 @@ private:
 	}
 
 	bool scanDOWNRIGHT(const std::vector<std::vector<int>>& src_map, point& p, const std::vector<blockInfo>& old_info) {
-		int coreSize = 0;
+		blockInfo coreInfo;
+		coreInfo.size = 0;
 		for (size_t i = 0; i < old_info.size(); i++) {
 			if (old_info[i].id == -1) {
-				coreSize = old_info[i].size;
+				coreInfo = old_info[i];
 				break;
 			}
 		}
@@ -360,7 +379,10 @@ private:
 					p.y = i;
 					return true;
 				}
-				if (src_map[i][j] == -1 && coreSize < 4 && coreSize > 1) {
+				if (src_map[i][j] == -1 && 
+					coreInfo.size < 4 && 
+					coreInfo.size > 1 && 
+					(coreInfo.central.x != j || coreInfo.central.y != i)) {
 					p.x = j;
 					p.y = i;
 					return true;
@@ -371,10 +393,11 @@ private:
 	}
 
 	bool scanLEFTUP(const std::vector<std::vector<int>>& src_map, point& p, const std::vector<blockInfo>& old_info) {
-		int coreSize = 0;
+		blockInfo coreInfo;
+		coreInfo.size = 0;
 		for (size_t i = 0; i < old_info.size(); i++) {
 			if (old_info[i].id == -1) {
-				coreSize = old_info[i].size;
+				coreInfo = old_info[i];
 				break;
 			}
 		}
@@ -387,7 +410,10 @@ private:
 					p.y = i;
 					return true;
 				}
-				if (src_map[i][j] == -1 && coreSize < 4 && coreSize > 1) {
+				if (src_map[i][j] == -1 &&
+					coreInfo.size < 4 &&
+					coreInfo.size > 1 &&
+					(coreInfo.central.x != j || coreInfo.central.y != i)) {
 					p.x = j;
 					p.y = i;
 					return true;
@@ -398,10 +424,11 @@ private:
 	};
 
 	bool scanLEFTDOWN(const std::vector<std::vector<int>>& src_map, point& p, const std::vector<blockInfo>& old_info) {
-		int coreSize = 0;
+		blockInfo coreInfo;
+		coreInfo.size = 0;
 		for (size_t i = 0; i < old_info.size(); i++) {
 			if (old_info[i].id == -1) {
-				coreSize = old_info[i].size;
+				coreInfo = old_info[i];
 				break;
 			}
 		}
@@ -414,7 +441,10 @@ private:
 					p.y = i;
 					return true;
 				}
-				if (src_map[i][j] == -1 && coreSize < 4 && coreSize > 1) {
+				if (src_map[i][j] == -1 &&
+					coreInfo.size < 4 &&
+					coreInfo.size > 1 &&
+					(coreInfo.central.x != j || coreInfo.central.y != i)) {
 					p.x = j;
 					p.y = i;
 					return true;
@@ -425,10 +455,11 @@ private:
 	}
 
 	bool scanRIGHTUP(const std::vector<std::vector<int>>& src_map, point& p, const std::vector<blockInfo>& old_info) {
-		int coreSize = 0;
+		blockInfo coreInfo;
+		coreInfo.size = 0;
 		for (size_t i = 0; i < old_info.size(); i++) {
 			if (old_info[i].id == -1) {
-				coreSize = old_info[i].size;
+				coreInfo = old_info[i];
 				break;
 			}
 		}
@@ -441,7 +472,10 @@ private:
 					p.y = i;
 					return true;
 				}
-				if (src_map[i][j] == -1 && coreSize < 4 && coreSize > 1) {
+				if (src_map[i][j] == -1 &&
+					coreInfo.size < 4 &&
+					coreInfo.size > 1 &&
+					(coreInfo.central.x != j || coreInfo.central.y != i)) {
 					p.x = j;
 					p.y = i;
 					return true;
@@ -452,10 +486,11 @@ private:
 	}
 
 	bool scanRIGHTDOWN(const std::vector<std::vector<int>>& src_map, point& p, const std::vector<blockInfo>& old_info) {
-		int coreSize = 0;
+		blockInfo coreInfo;
+		coreInfo.size = 0;
 		for (size_t i = 0; i < old_info.size(); i++) {
 			if (old_info[i].id == -1) {
-				coreSize = old_info[i].size;
+				coreInfo = old_info[i];
 				break;
 			}
 		}
@@ -463,8 +498,13 @@ private:
 		int width = src_map[0].size();
 		for (int j = width - 1; j >= 0; j--) {
 			for (int i = 0; i < height - 1; i++) {
-				if (src_map[i][j] == -1) {
-
+				if (src_map[i][j] == -1 &&
+					coreInfo.size < 4 &&
+					coreInfo.size > 1 &&
+					(coreInfo.central.x != j || coreInfo.central.y != i)) {
+					p.x = j;
+					p.y = i;
+					return true;
 				}
 				if (src_map[i][j] > 0) {
 					p.x = j;
@@ -544,6 +584,22 @@ void print(std::vector<std::vector<int>>& v, std::vector<blockInfo> info) {
 	}
 }
 
+void printToFile(std::vector<std::vector<int>>& v, std::vector<blockInfo> info, std::ofstream& outlog) {
+	if (v.empty() || v[0].empty())
+		return;
+
+	for (size_t i = 0; i < v.size(); ++i) {
+		for (size_t j = 0; j < v[0].size(); ++j) {
+			outlog << v[i][j] << " ";
+		}
+		outlog << std::endl;
+	}
+	for (size_t i = 0; i < info.size(); i++) {
+		outlog << "id:" << info[i].id << " size:" << info[i].size <<
+			" leftup:(" << info[i].leftup.x << ", " << info[i].leftup.y <<
+			") rightdown:(" << info[i].rightdown.x << ", " << info[i].rightdown.y << ")" << std::endl;
+	}
+}
 // UP 0 DOWN 1 LEFT 2 RIGHT 3
 
 void printDir(int dir90, int dir45) {
@@ -599,10 +655,14 @@ void printDir(int dir90, int dir45) {
 int main(int argc, char const *argv[])
 {
 	Solution2 solution;
+	std::ofstream outlog("testcast.log");
+	if (!outlog.is_open())
+		return 0;
 	//parsing input token stream to structure.
 	int N;
 	std::cin >> N;
 	std::cout << "插入点测试:" << std::endl;
+	outlog << "插入点测试" << std::endl;
 	while (N--) {
 		int m, n;
 		std::cin >> m >> n;
@@ -617,17 +677,23 @@ int main(int argc, char const *argv[])
 		std::vector<std::vector<int>> retVal(_map);
 		std::vector<blockInfo> initInfo = getBlockorInfo(_map);
 		std::cout << "input:" << std::endl;
+		outlog << "input:" << std::endl;
 		print(_map, initInfo);
+		printToFile(_map, initInfo, outlog);
 
 		//solution
 		std::vector<blockInfo> updateInfo = solution.insert(retVal, insX, insY, initInfo);
 		//output
 		std::cout << "output:" << std::endl;
+		outlog << "input:" << std::endl;
 		print(retVal, updateInfo);
+		printToFile(retVal, updateInfo, outlog);
 		std::cout << std::endl;
+		outlog << std::endl;
 	}
 
 	std::cout << "投出点测试" << std::endl;
+	outlog << "投出点测试" << std::endl;
 	std::cin >> N;
 	while (N--) {
 		int m, n;
@@ -645,13 +711,20 @@ int main(int argc, char const *argv[])
 		std::cout << "input:" << std::endl;
 		print(_map, initInfo);
 		printDir(dir90, dir45);
+		outlog << "input:" << std::endl;
+		printToFile(_map, initInfo, outlog);
+
 		//solution
 		std::vector<blockInfo> updateInfo = solution.cast(retVal, (Direct)dir90, (Direct)dir45, initInfo);
 		//output
 		std::cout << "output:" << std::endl;
 		print(retVal, updateInfo);
 		std::cout << std::endl;
+		outlog << "output:" << std::endl;
+		printToFile(_map, initInfo, outlog);
+		outlog << std::endl;
 	}
+	outlog.close();
 	system("PAUSE");
 	return 0;
 }
