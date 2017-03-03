@@ -685,7 +685,7 @@ int main(int argc, char const *argv[])
 		std::vector<blockInfo> updateInfo = solution.insert(retVal, insX, insY, initInfo);
 		//output
 		std::cout << "output:" << std::endl;
-		outlog << "input:" << std::endl;
+		outlog << "output:" << std::endl;
 		print(retVal, updateInfo);
 		printToFile(retVal, updateInfo, outlog);
 		std::cout << std::endl;
@@ -721,7 +721,7 @@ int main(int argc, char const *argv[])
 		print(retVal, updateInfo);
 		std::cout << std::endl;
 		outlog << "output:" << std::endl;
-		printToFile(_map, initInfo, outlog);
+		printToFile(retVal, updateInfo, outlog);
 		outlog << std::endl;
 	}
 	outlog.close();
