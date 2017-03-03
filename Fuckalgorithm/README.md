@@ -189,6 +189,7 @@ input:
 0 1 1 1 0 
 1 1 0 0 0 
 id:1 size:2 leftup:(0, 0) rightdown:(1, 1)
+(2, 2)
 output:
 1 1 0 1 1 
 1 3 3 3 0 
@@ -205,6 +206,7 @@ input:
 1 1 0 0 0 
 id:1 size:2 leftup:(0, 0) rightdown:(1, 1)
 id:2 size:2 leftup:(1, 2) rightdown:(2, 3)
+(3, 3)
 output:
 1 1 0 1 1 
 1 3 3 3 0 
@@ -219,6 +221,7 @@ input:
 0 1 0 0 
 0 1 1 0 
 id:1 size:2 leftup:(0, 0) rightdown:(1, 1)
+(2, 2)
 output:
 2 2 1 0 
 2 2 1 1 
@@ -233,6 +236,7 @@ input:
 0 1 0 0 
 0 0 0 0 
 id:1 size:2 leftup:(0, 0) rightdown:(1, 1)
+(2, 2)
 output:
 2 2 1 0 
 2 2 1 1 
@@ -246,6 +250,7 @@ input:
 0 2 2 0 
 0 0 0 0 
 id:1 size:2 leftup:(1, 1) rightdown:(2, 2)
+(0, 0)
 output:
 1 1 1 0 
 1 2 2 0 
@@ -262,6 +267,7 @@ input:
 1 1 1 0 0 
 id:1 size:2 leftup:(0, 0) rightdown:(1, 1)
 id:2 size:3 leftup:(0, 2) rightdown:(2, 4)
+(3, 5)
 output:
 2 2 0 1 1 
 2 2 0 1 0 
@@ -284,6 +290,7 @@ id:1 size:3 leftup:(0, 0) rightdown:(2, 2)
 id:2 size:3 leftup:(3, 0) rightdown:(5, 2)
 id:3 size:3 leftup:(3, 3) rightdown:(5, 5)
 id:4 size:2 leftup:(0, 5) rightdown:(1, 6)
+(2, 3)
 output:
 2 2 4 4 4 4 0 
 2 2 4 4 4 4 0 
@@ -305,6 +312,7 @@ input:
 id:1 size:2 leftup:(0, 0) rightdown:(1, 1)
 id:2 size:2 leftup:(3, 0) rightdown:(4, 1)
 id:-1 size:1 leftup:(2, 1) rightdown:(2, 1)
+(2, 0)
 output:
 1 -1 -1 -1 1 
 1 -1 -1 -1 1 
@@ -315,6 +323,7 @@ input:
 0 0 
 0 -1 
 id:-1 size:1 leftup:(1, 1) rightdown:(1, 1)
+(0, 1)
 output:
 0 0 
 1 -1 
@@ -328,6 +337,7 @@ input:
 0 3 3 3 0 
 1 1 0 0 0 
 id:1 size:3 leftup:(1, 1) rightdown:(3, 3)
+上右
 output:
 1 1 0 1 0 
 1 3 3 3 0 
@@ -343,6 +353,7 @@ input:
 0 3 3 3 0 
 0 0 0 0 0 
 id:1 size:3 leftup:(1, 1) rightdown:(3, 3)
+下右
 output:
 2 2 0 0 0 
 2 2 2 2 0 
@@ -359,6 +370,7 @@ input:
 0 2 2 0 
 id:1 size:2 leftup:(0, 0) rightdown:(1, 1)
 id:2 size:2 leftup:(1, 2) rightdown:(2, 3)
+下左
 output:
 2 2 1 0 
 2 2 1 1 
@@ -372,6 +384,7 @@ input:
 0 1 0 0 
 0 0 0 0 
 id:1 size:2 leftup:(0, 0) rightdown:(1, 1)
+左下
 output:
 0 2 2 0 
 1 2 2 1 
@@ -385,6 +398,7 @@ input:
 0 2 2 0 
 0 0 0 0 
 id:1 size:2 leftup:(1, 1) rightdown:(2, 2)
+左上
 output:
 0 1 1 0 
 0 2 2 0 
@@ -401,6 +415,7 @@ input:
 1 1 1 0 0 
 id:1 size:2 leftup:(0, 0) rightdown:(1, 1)
 id:2 size:3 leftup:(0, 2) rightdown:(2, 4)
+上左
 output:
 0 1 0 1 1 
 1 1 0 1 0 
@@ -422,6 +437,7 @@ id:1 size:3 leftup:(0, 0) rightdown:(2, 2)
 id:2 size:3 leftup:(3, 0) rightdown:(5, 2)
 id:3 size:3 leftup:(3, 3) rightdown:(5, 5)
 id:4 size:2 leftup:(0, 5) rightdown:(1, 6)
+右下
 output:
 3 3 3 2 2 0 0 
 3 3 3 2 2 1 0 
@@ -447,6 +463,7 @@ id:1 size:3 leftup:(0, 0) rightdown:(2, 2)
 id:2 size:3 leftup:(3, 0) rightdown:(5, 2)
 id:3 size:3 leftup:(3, 3) rightdown:(5, 5)
 id:4 size:2 leftup:(0, 5) rightdown:(1, 6)
+右上
 output:
 3 3 3 3 3 3 0 
 3 3 3 3 3 3 0 
@@ -465,9 +482,11 @@ input:
 -1 -1 0 
 -1 -1 0 
 id:-1 size:2 leftup:(0, 1) rightdown:(1, 2)
+左上
 output:
 1 0 0 
 1 1 0 
 0 -1 0 
+id:-1 size:1 leftup:(1, 2) rightdown:(1, 2)
 
 ```
