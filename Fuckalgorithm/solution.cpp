@@ -153,7 +153,7 @@ public:
 		}
 
 		// 递归求每次结果的最大值
-		return dfsHelper(src_map, state, old_info, std::vector<blockInfo>());
+		return dfsHelper(src_map, state, old_info, new_info);
 
 	};
 
@@ -185,7 +185,7 @@ private:
 			for (size_t j = 1; j < state[0].size(); ++j) {
 				if (state[i][j] > 0) {
 					state[i][j] = std::min(std::min(state[i - 1][j - 1], state[i][j - 1]), state[i - 1][j]) + 1;
-					if (state[i][j] >= coreInfo.size && state[i][j] <= 4 && state[i][j] > max_size) {
+					if (/*state[i][j] >= coreInfo.size && */state[i][j] <= 4 && state[i][j] > max_size) {
 						rigion_leftup.x = offsetX + j - state[i][j] + 1;
 						rigion_leftup.y = offsetY + i - state[i][j] + 1;
 						rigion_rightdown.x = offsetX + j;
@@ -652,6 +652,58 @@ void printDir(int dir90, int dir45) {
 	}
 }
 
+// UP 0 DOWN 1 LEFT 2 RIGHT 3
+
+void printDirToFile(int dir90, int dir45, std::ofstream& outlog) {
+	switch (dir90)
+	{
+	case 0:
+		switch (dir45)
+		{
+		case 2:
+			outlog << "上左" << std::endl;
+			break;
+		case 3:
+			outlog << "上右" << std::endl;
+			break;
+		}
+		break;
+	case 1:
+		switch (dir45)
+		{
+		case 2:
+			outlog << "下左" << std::endl;
+			break;
+		case 3:
+			outlog << "下右" << std::endl;
+			break;
+		}
+		break;
+	case 2:
+		switch (dir45)
+		{
+		case 0:
+			outlog << "左上" << std::endl;
+			break;
+		case 1:
+			outlog << "左下" << std::endl;
+			break;
+		}
+		break;
+	case 3:
+		switch (dir45)
+		{
+		case 0:
+			outlog << "右上" << std::endl;
+			break;
+		case 1:
+			outlog << "右下" << std::endl;
+			break;
+		}
+		break;
+	}
+}
+
 int main(int argc, char const *argv[])
 {
 	Solution2 solution;
@@ -679,7 +731,9 @@ int main(int argc, char const *argv[])
 		std::cout << "input:" << std::endl;
 		outlog << "input:" << std::endl;
 		print(_map, initInfo);
+		std::cout << "(" << insX << ", " << insY << ")" << std::endl;
 		printToFile(_map, initInfo, outlog);
+		outlog << "(" << insX << ", " << insY << ")" << std::endl;
 
 		//solution
 		std::vector<blockInfo> updateInfo = solution.insert(retVal, insX, insY, initInfo);
@@ -713,6 +767,7 @@ int main(int argc, char const *argv[])
 		printDir(dir90, dir45);
 		outlog << "input:" << std::endl;
 		printToFile(_map, initInfo, outlog);
+		printDirToFile(dir90, dir45, outlog);
 
 		//solution
 		std::vector<blockInfo> updateInfo = solution.cast(retVal, (Direct)dir90, (Direct)dir45, initInfo);
