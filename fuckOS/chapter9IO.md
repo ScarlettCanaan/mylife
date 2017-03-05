@@ -1,7 +1,4 @@
-<script src="{{ bower directory }}/bower-webfontloader/webfont.js" />
-<script src="{{ bower directory }}/snap.svg/dist/snap.svg-min.js" />
-<script src="{{ bower directory }}/underscore/underscore-min.js" />
-<script src="{{ bower directory }}/js-sequence-diagrams/dist/sequence-diagram-min.js" />
+
 
 # 第九节 IO管理(调度与控制概念)
 [TOC]
