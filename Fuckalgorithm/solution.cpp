@@ -50,9 +50,15 @@ public:
 		std::vector<blockInfo> new_info;
 		// 有core并且core没有成长到4*4的情况，优先构造core四周的结构
 		for (size_t i = 0; i < old_info.size(); i++) {
-			if (old_info[i].id == -1 && old_info[i].size < 4) {
-				new_info.push_back(calcCoreStructure(src_map, old_info[i]));
-				break;
+			if (old_info[i].id == -1) {
+				if (old_info[i].size < 4) {
+					new_info.push_back(calcCoreStructure(src_map, old_info[i]));
+					break;
+				}
+				else {
+					new_info.push_back(old_info[i]);
+					break;
+				}
 			}
 		}
 		// 定义动态规划的状态
@@ -133,9 +139,14 @@ public:
 		std::vector<blockInfo> new_info;
 		// 有core并且core没有成长到4*4的情况，优先构造core四周的结构
 		for (size_t i = 0; i < old_info.size(); i++) {
-			if (old_info[i].id == -1 && old_info[i].size < 4) {
-				new_info.push_back(calcCoreStructure(src_map, old_info[i]));
-				break;
+			if (old_info[i].id == -1) {
+				if (old_info[i].size < 4) {
+					new_info.push_back(calcCoreStructure(src_map, old_info[i]));
+					break;
+				} else {
+					new_info.push_back(old_info[i]);
+					break;
+				}
 			}
 		}
 		// 定义动态规划的状态
@@ -218,10 +229,11 @@ private:
 		// 状态转移方程
 		int max_size = 0;
 		std::vector<point> Q;
-		for (size_t i = 1; i < state.size(); ++i) {
-			for (size_t j = 1; j < state[0].size(); ++j) {
+		for (size_t i = 0; i < state.size(); ++i) {
+			for (size_t j = 0; j < state[0].size(); ++j) {
 				if (state[i][j] > 0) {
-					state[i][j] = std::min(std::min(state[i - 1][j - 1], state[i][j - 1]), state[i - 1][j]) + 1;
+					if (i > 0 && j > 0)
+						state[i][j] = std::min(std::min(state[i - 1][j - 1], state[i][j - 1]), state[i - 1][j]) + 1;
 					if (state[i][j] > max_size) {
 						Q.clear();
 						max_size = state[i][j];
@@ -241,7 +253,7 @@ private:
 				}
 			}
 		}
-		if (max_size <= 1)
+		if (max_size < 1)
 			return new_info;
 		for (size_t i = 0; i < Q.size(); ++i) {
 			// 遍历正方形的每个像素点
