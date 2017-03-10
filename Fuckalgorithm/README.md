@@ -14,7 +14,7 @@
     
 - 输入尺寸为(M*N)的地图(地图里有一只细胞聚合体)
 - 输入吞掉的小细胞的位置
-- 输入吐出细胞的方向
+- 输入吐出细胞的方向,个数
 
 ### 地图表达
 
@@ -49,8 +49,8 @@
 
 ### cast up方向表达
 
-扔出细胞的方向为8个方向  
-使用
+扔出细胞的方向为8个方向, 这会影响扫描的起始点和顺序   
+使用弧度角作为输入，算法内部再转换为以下8个方向:   
 > "leftup", "leftdown", "rightup"， "rightdown"，"upleft", "upright", "downleft", "downright"
 
 表示投出cell的8个方向
@@ -58,41 +58,68 @@
 ## 输出表达    
 
 聚合：
-- 返回吞并一个细胞之后的聚合体的形状
+- 返回吞并一个细胞之后的聚合体的形状结构信息
 
 分裂:
-- 返回按方向吐出细胞的位置，以及吐出之后聚合体的形状
+- 返回按方向吐出细胞的位置，以及吐出之后聚合体的形状结构信息
 
 ## 输入输出格式
 
 ###### 地图 
 
-`vector<vector<int>>`
+使用 `int8_t*`, `x`, `y` 表示地图的位图信息和x, y长度   
+
+取某个像素的位置信息(m, n)用`[m + n * x]`表示
+
+
 ###### 点 
 
 ```
-class point {
-public:
-	size_t x, y;
-}
+struct Point     
+{      
+    int x;    
+    int y;    
+}    
 ```
 ######聚合体各个结构信息
 
 ```
-class blockInfo {    
+class blockInfo    
+{    
 public:    
-	int id;    
-	int size;   
-	point leftup;   
-	point rightdown;   
-	point central;   
+    bool isHeart;
+    size_t size;
+    Point leftup;
+	Point rightdown;
+	Point central;
+    bool adjust();
 };
 vector<blockInfo>    
 ```
 
+######接口信息
 
-##条件
-无
+合并函数:   
+```
+bool merge(const int8_t* binaryInfo, size_t x, size_t y, 
+   const std::vector<BlockInfo>& blockInfoList,
+   std::vector<BlockInfo>* retBlockList
+);
+```
+
+分裂函数:
+```
+bool breakUp(const std::vector<BlockInfo>& blockInfoList,
+   int takenCount,
+   float direction,
+   int8_t* binaryInfo, size_t x, size_t y,
+   std::vector<BlockInfo>* retBlockList,
+   std::vector<Point>* retTakenPoints
+);
+```
+
+##边界条件
+如果输入吐出细胞的个数小于能吐出的总个数，调用失败
 
 ## 算法原理
 
@@ -134,7 +161,7 @@ vector<blockInfo>
 - 每次进行聚合过程之前，如果当前core的尺寸小于4\*4，则优先在**以core为中央的最大为7\*7的平面**搜索最大为4\*4的正方形
 - 每次吞并细胞的位置，若在**以core为中央的最大为7\*7**的范围内并且core的尺寸小于4\*4，则优先聚合core
 - 搜索吐出细胞的位置，若搜索到`-1`并且core的尺寸小于4\*4，则吐出此位置，若core尺寸等于4\*4则跳过
-- 聚合过程所求得的解集，优先选出最靠近core位置的解 (未实现)
+- 聚合过程所求得的解集，优先选出最靠近core位置的解
 
 ## 性能分析
 
