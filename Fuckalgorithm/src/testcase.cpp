@@ -35,14 +35,10 @@ void printToFile(int8_t* binaryInfo, size_t x, size_t y, std::ofstream& _outlog)
 int main(int argc, char const *argv[])
 {
 	MergeLogic solution;
-	std::ofstream outlog("testcast.log");
-	if (!outlog.is_open())
-		return 0;
 	//parsing input token stream to structure.
 	int N;
 	std::cin >> N;
-	std::cout << "²åÈëµã²âÊÔ:" << std::endl;
-	outlog << "²åÈëµã²âÊÔ" << std::endl;
+	std::cout << "æ’å…¥ç‚¹æµ‹è¯•:" << std::endl;
 	while (N--) {
 		int m, n;
 		std::cin >> m >> n;
@@ -63,8 +59,6 @@ int main(int argc, char const *argv[])
 		solution.merge(binaryInfo, m, n, std::vector<BlockInfo>(), old_info);
 		std::cout << "(" << insX << ", " << insY << ")" << std::endl;
 		printInfo(*old_info);
-		printToFile(binaryInfo, m, n, outlog);
-		outlog << "(" << insX << ", " << insY << ")" << std::endl;
 
 		//solution
 		binaryInfo[m * (insY) + insX] = 1;
@@ -80,8 +74,7 @@ int main(int argc, char const *argv[])
 		delete new_info;
 	}
 
-	std::cout << "Í¶³öµã²âÊÔ" << std::endl;
-	outlog << "Í¶³öµã²âÊÔ" << std::endl;
+	std::cout << "æŠ•å‡ºç‚¹æµ‹è¯•" << std::endl;
 	std::cin >> N;
 	while (N--) {
 		int m, n;
@@ -111,7 +104,6 @@ int main(int argc, char const *argv[])
 		print(binaryInfo, m, n);
 		printInfo(*new_info);
 	}
-	outlog.close();
 	system("PAUSE");
 	return 0;
 }
