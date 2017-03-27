@@ -81,7 +81,7 @@ struct Point
     int y;    
 }    
 ```
-######聚合体各个结构信息
+###### 聚合体各个结构信息
 
 ```
 class blockInfo    
@@ -97,7 +97,7 @@ public:
 vector<blockInfo>    
 ```
 
-######接口信息
+###### 接口信息
 
 合并函数:   
 ```
@@ -118,7 +118,7 @@ bool breakUp(const std::vector<BlockInfo>& blockInfoList,
 );
 ```
 
-##边界条件
+## 边界条件
 如果输入吐出细胞的个数小于能吐出的总个数，调用失败
 
 ## 算法原理
